@@ -13,9 +13,9 @@ export class GetAllRestaurantsService {;
             perPage,
         });
 
-        const formattedRestaurants = formatRestaurants(restaurants)
+        const formattedRestaurants = formatRestaurants(restaurants);
         const pageInfo = getPageInfo(page, perPage, count);
 
-        return { pageInfo, restaurants: formattedRestaurants }
+        return { pageInfo, restaurants: formattedRestaurants };
     }
 }

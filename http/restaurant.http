@@ -2,6 +2,10 @@ GET http://localhost:3333/restaurants
 
 ###
 
+GET http://localhost:3333/restaurants/a624b209-e9b2-11ee-8f1d-1c39475f4058
+
+###
+
 POST http://localhost:3333/restaurants
 Content-Type: application/json
 

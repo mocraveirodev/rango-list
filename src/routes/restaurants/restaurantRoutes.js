@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { celebrate } from 'celebrate';
 import { 
-    getQuerySchema,
+    getAllRestaurantsSchema,
+    getRestaurantByIdSchema,
     createRestaurantSchema
 } from '../../validators/restaurantValidator.js';
 import RestaurantController from '../../controllers/restaurants/RestaurantController.js';
@@ -9,13 +10,13 @@ import RestaurantController from '../../controllers/restaurants/RestaurantContro
 const restaurantsRouter = Router();
 const restaurantController = new RestaurantController();
 
-restaurantsRouter.get(
-    '/',
-    celebrate({
-    query: getQuerySchema,
-    }),
-    restaurantController.get,
-);
+restaurantsRouter.get('/',celebrate({
+    query: getAllRestaurantsSchema,
+}), restaurantController.getAll,);
+
+restaurantsRouter.get('/:id',celebrate({
+    params: getRestaurantByIdSchema
+}), restaurantController.getById,);
 
 restaurantsRouter.post('/', celebrate({
     body: createRestaurantSchema

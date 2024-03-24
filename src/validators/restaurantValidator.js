@@ -22,10 +22,14 @@ const weekDayOpeningSchema = Joi.object({
         .regex(VALID_HOUR),
 });
 
-const getQuerySchema = Joi.object({
+const getAllRestaurantsSchema = Joi.object({
     page: Joi.number().min(1),
     perPage: Joi.number().min(1).max(50),
 });
+
+const getRestaurantByIdSchema = Joi.object({
+    id: Joi.string().guid({ version: 'uuidv1' }).required(),
+}).required();
 
 const createRestaurantSchema = Joi.object({
     name: Joi.string().required(),
@@ -42,6 +46,7 @@ const createRestaurantSchema = Joi.object({
 });
 
 export {
-    getQuerySchema,
+    getAllRestaurantsSchema,
+    getRestaurantByIdSchema,
     createRestaurantSchema
 };
