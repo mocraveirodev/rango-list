@@ -2,7 +2,7 @@ import mysql from 'mysql2';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const connectToDatabase = () => {
+const connectToDatabase = async () => {
     const connection = mysql.createConnection({
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USER,
@@ -10,18 +10,20 @@ const connectToDatabase = () => {
         database: process.env.DATABASE_NAME
     });
 
-    connection.connect((err) => {
-        if (err) {
-        console.error('Error connecting to database:', err);
-        return;
-        }
-        console.log('Successfully connected to MySQL database');
+    return new Promise((resolve, reject) => {
+        connection.connect((err) => {
+            if (err) {
+                console.error('Error connecting to database:', err);
+                reject(err);
+            } else {
+                console.log('Successfully connected to MySQL database');
+                resolve(connection);
+            }
+        });
     });
+};
 
-    return connection;
-}
-
-const queryDatabase = (connection, query, values = null) => {
+const queryDatabase = async (connection, query, values = null) => {
     return new Promise((resolve, reject) => {
         connection.query(query, values, (err, results) => {
             if (err) {
@@ -31,19 +33,20 @@ const queryDatabase = (connection, query, values = null) => {
             }
         });
     });
-}
-
-const closeConnectionToDatabase = (connection) => {
-    connection.end((err) => {
-        if (err) {
-            console.error('Error disconnecting from database:', err);
-            return;
-        }
-        console.log('Successfully disconnected from MySQL database');
-    });
-}   
-export default {
-    connectToDatabase,
-    queryDatabase,
-    closeConnectionToDatabase
 };
+
+const closeConnectionToDatabase = async (connection) => {
+    return new Promise((resolve, reject) => {
+        connection.end((err) => {
+            if (err) {
+                console.error('Error disconnecting from database:', err);
+                reject(err);
+            } else {
+                console.log('Successfully disconnected from MySQL database');
+                resolve();
+            }
+        });
+    });
+};
+
+export { connectToDatabase, queryDatabase, closeConnectionToDatabase };

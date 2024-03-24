@@ -1,46 +1,47 @@
-import { closeTimeIsGreaterThanOpenTime } from './dateValidationRules.js';
+import {
+    closeTimeIsGreaterThanOpenTime,
+    operatingTimeLongerThan15Minutes
+} from './dateValidationRules.js';
+
+function isCloseTimeGreaterThanOpenTime(openTime, closeTime, res) {
+    return closeTimeIsGreaterThanOpenTime(openTime, closeTime, res);
+}
+
+function isOperatingTimeLongerThan15Minutes(openTime, closeTime, res) {
+    return operatingTimeLongerThan15Minutes(openTime, closeTime, res) >= 15;
+}
+
+function isTimeFilled(openTime, closeTime) {
+    return openTime && closeTime;
+}
 
 export function checkValidOpeningHours(openingHours, res) {
     let message = 'Validated!';
     let status = 'valid';
-  
-    Object.values(openingHours || []).some((openingHour, index) => {
-      const openTime = openingHour.open;
-      const closeTime = openingHour.close;
-      const weekDay = `${Object.keys(openingHours || [])[index]}.${
-        Object.keys(openingHour)[0]
-      }`;
-  
-      if ((openTime && !closeTime) || (!openTime && closeTime)) {
-        message = `The opening and closing times should be filled in on "${weekDay}"`;
-        status = 'invalid';
-        return true;
-      }
-  
-      if (openTime && closeTime) {
-        if (!closeTimeIsGreaterThanOpenTime(openTime, closeTime,res)) {
-          message = `End time must be later than start time in the field "${weekDay}". $422`;
-          status = 'invalid';
-          return true;
+
+    Object.entries(openingHours || []).some(([day, openingHour]) => {
+        const { open, close } = openingHour;
+
+        if (!isTimeFilled(open, close)) {
+            message = `The opening and closing times should be filled in on "${day}". $422`;
+            status = 'invalid';
+            return true;
         }
-  
-        if (
-          dateProvider.differenceInMinutesBetweenTwoTimes({
-            openTime,
-            closeTime,
-          }) < 15
-        ) {
-          message = `The intervals between times must be at least 15 minutes in the field "${weekDay}"`;
-          status = 'invalid';
-          return true;
+
+        if (!isCloseTimeGreaterThanOpenTime(open, close, res)) {
+            message = `The opening time must be earlier than the closing time on "${day}". $422`;
+            status = 'invalid';
+            return true;
         }
-      }
-  
-      return false;
+
+        if (!isOperatingTimeLongerThan15Minutes(open, close, res)) {
+            message = `The opening hours must be at least 15 minutes on "${day}". $422`;
+            status = 'invalid';
+            return true;
+        }
+
+        return false;
     });
-  
-    return {
-      status,
-      message,
-    };
-  }
+
+    return { status, message };
+}

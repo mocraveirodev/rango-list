@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const isValidTime = (time) => {
-    const VALID_HOUR = process.env.REGEX_VALID_HOUR;
+    const VALID_HOUR = new RegExp(process.env.REGEX_VALID_HOUR);
 
     return VALID_HOUR.test(time);
 }
@@ -25,6 +25,15 @@ const convertTimeToDate = (time, res) => {
     return completeDate;
 }
 
+
+const intervalInMinutes = (startDate, endDate) => {
+    const intervalInMs = Math.abs(endDate - startDate);
+    const intervalInMinutes = Math.floor(intervalInMs / 1000 / 60);
+
+    return intervalInMinutes;
+}
+
+
 const closeTimeIsGreaterThanOpenTime = (open, close, res) => {
     const openDatetime = convertTimeToDate(open, res);
     const closeDatetime = convertTimeToDate(close, res);
@@ -32,6 +41,11 @@ const closeTimeIsGreaterThanOpenTime = (open, close, res) => {
     return closeDatetime > openDatetime;
 }
 
-export default {
-    closeTimeIsGreaterThanOpenTime
-};
+const operatingTimeLongerThan15Minutes = (open, close, res) => {
+    const openDatetime = convertTimeToDate(open, res);
+    const closeDatetime = convertTimeToDate(close, res);
+
+    return intervalInMinutes(closeDatetime, openDatetime);
+}
+
+export { closeTimeIsGreaterThanOpenTime, operatingTimeLongerThan15Minutes };

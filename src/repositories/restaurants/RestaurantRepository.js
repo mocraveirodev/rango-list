@@ -4,7 +4,6 @@ import {
     closeConnectionToDatabase
 } from '../../../config/databaseConnection.js';
 import RestaurantEntity from '../../database/entities/RestaurantEntity.js';
-import { errorHandler } from '../../utils/errorHandler.js';
 
 export default class RestaurantRepository {
     constructor() {
@@ -12,10 +11,12 @@ export default class RestaurantRepository {
     }
     async create(name) {
         const connection = await connectToDatabase();
-        const query = `INSERT INTO ${this.restaurantEntity.tableName}(name) VALUES (?)`;
-        const result = await queryDatabase(connection, query, name);
+        let query = `INSERT INTO ${this.restaurantEntity.tableName} (id, name) VALUES (UUID(), ?)`;
+        await queryDatabase(connection, query, name);
+        query = `SELECT id FROM ${this.restaurantEntity.tableName} WHERE name = ? ORDER BY created_at DESC LIMIT 1`;
+        const [result] = await queryDatabase(connection, query, name);
         await closeConnectionToDatabase(connection);
-        
+
         return result;
     }
 }

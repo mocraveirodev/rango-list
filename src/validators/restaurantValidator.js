@@ -2,10 +2,10 @@ import Joi from 'joi';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const VALID_HOUR = process.env.REGEX_VALID_HOUR;
+const VALID_HOUR = new RegExp(process.env.REGEX_VALID_HOUR);
 
 const addressSchema = Joi.object({
-    postalCode: Joi.string().required(),
+    postal_code: Joi.string().required(),
     street: Joi.string().required(),
     number: Joi.string().required(),
     complement: Joi.string(),
@@ -17,11 +17,9 @@ const addressSchema = Joi.object({
 
 const weekDayOpeningSchema = Joi.object({
     open: Joi.string()
-        .regex(VALID_HOUR)
-        .required(),
+        .regex(VALID_HOUR),
     close: Joi.string()
-        .regex(VALID_HOUR)
-        .required(),
+        .regex(VALID_HOUR),
 });
 
 const createRestaurantSchema = Joi.object({
@@ -38,6 +36,6 @@ const createRestaurantSchema = Joi.object({
     }).required(),
 });
 
-module.exports = {
+export {
     createRestaurantSchema
 };

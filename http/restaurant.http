@@ -1,0 +1,36 @@
+POST http://localhost:3333/restaurants
+Content-Type: application/json
+
+{
+    "name": "Goomer Lista Rango",
+    "address": {
+        "postal_code": "01000111",
+        "street": "Rua dos bobos",
+        "number": "0A",
+        "city": "São Paulo",
+        "state": "São Paulo",
+        "country": "Brasil"
+    },
+    "openingHours": {
+        "monday": {
+            "open": "09:00",
+            "close": "17:00"
+        },
+        "tuesday": {
+            "open": "09:00",
+            "close": "17:00"
+        },
+        "wednesday": {
+            "open": "08:00",
+            "close": "12:00"
+        },
+        "thursday": {
+            "open": "09:00",
+            "close": "17:00"
+        },
+        "friday": {
+            "open": "09:00",
+            "close": "17:00"
+        }
+    }
+}

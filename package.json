@@ -16,8 +16,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write .",
     "build": "babel src --extensions \".js\" --out-dir dist --copy-files",
-    "start": "babel-node src/shared/infra/http/server.js",
-    "dev": "cross-env NODE_ENV=dev nodemon --inspect src/shared/infra/http/server.js"
+    "start": "babel-node src/server.js",
+    "dev": "cross-env NODE_ENV=dev nodemon --inspect src/server.js"
   },
   "dependencies": {
     "celebrate": "^15.0.3",
