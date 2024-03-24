@@ -6,9 +6,9 @@ import { checkAndCreateAddressIfNotExists } from '../../utils/checkAndCreateAddr
 import errorHandler from '../../utils/errorHandler.js';
 
 export class CreateRestaurantService {;    
-    async execute({ name, address, openingHours }, res) {
-        if (openingHours) {
-            const { status, message } = checkValidOpeningHours(openingHours, res);
+    async execute({ name, address, opening_hours }, res) {
+        if (opening_hours) {
+            const { status, message } = checkValidOpeningHours(opening_hours, res);
 
             if (status === 'invalid') {
                 throw errorHandler(message, res);
@@ -17,14 +17,14 @@ export class CreateRestaurantService {;
 
         const restaurantRepository = new RestaurantRepository();
         const restaurant = await restaurantRepository.create([ name ]);
-        console.log("restaurant", restaurant);
+
         const checkedAddress = await checkAndCreateAddressIfNotExists(address);
-        console.log("checkedAddress", checkedAddress);
+
         const restaurantAddressRepository = new RestaurantAddressRepository();
         await restaurantAddressRepository.create(restaurant.id, checkedAddress.id);
 
         const openingHoursRepository = new OpeningHoursRepository();
-        await openingHoursRepository.create(restaurant.id, openingHours);
+        await openingHoursRepository.create(restaurant.id, opening_hours);
 
         return restaurant;
     }

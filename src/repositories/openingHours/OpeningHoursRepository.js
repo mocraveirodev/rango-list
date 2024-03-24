@@ -9,15 +9,15 @@ export default class OpeningHoursRepository {
     constructor() {
         this.openingHoursEntity = OpeningHoursEntity;
     }
-    async create(restaurant_id, openingHours) {
+    async create(restaurant_id, opening_hours) {
         const connection = await connectToDatabase();
 
         this.openingHoursEntity.weekDays.map(async day => {
             const insertArray = [
                 restaurant_id,
                 day,
-                openingHours?.[day]?.open || null,
-                openingHours?.[day]?.close || null,
+                opening_hours?.[day]?.open || null,
+                opening_hours?.[day]?.close || null,
             ];
 
             const query = `INSERT INTO ${this.openingHoursEntity.tableName} (restaurant_id, week_day, open_hour, close_hour) VALUES (?, ?, ?, ?)`;

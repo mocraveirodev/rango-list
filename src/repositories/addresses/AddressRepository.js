@@ -50,7 +50,7 @@ export default class AddressesRepository {
         const connection = await connectToDatabase();
         const query = `SELECT id FROM ${this.addressEntity.tableName} WHERE postal_code = ? AND street = ? AND number = ?`;
         const [result] = await queryDatabase(connection, query, [postal_code, street, number]);
-        console.log("result", result);
+
         await closeConnectionToDatabase(connection);
         
         return result;
