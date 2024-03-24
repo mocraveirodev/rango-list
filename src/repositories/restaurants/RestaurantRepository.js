@@ -55,7 +55,9 @@ export default class RestaurantRepository {
         
         query = `SELECT COUNT(*) AS count FROM ${this.restaurantEntity.tableName}`;
         const [{ count }] = await queryDatabase(connection, query);
-
+        
+        await closeConnectionToDatabase(connection);
+        
         return { count, restaurants };
     }
 
