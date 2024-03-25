@@ -33,12 +33,15 @@ const intervalInMinutes = (startDate, endDate) => {
     return intervalInMinutes;
 }
 
-
 const closeTimeIsGreaterThanOpenTime = (open, close, res) => {
     const openDatetime = convertTimeToDate(open, res);
     const closeDatetime = convertTimeToDate(close, res);
 
     return closeDatetime > openDatetime;
+}
+
+const finishDateIsGreaterThanStartDate = (start_date, finish_date) => {
+    return finish_date > start_date;
 }
 
 const operatingTimeLongerThan15Minutes = (open, close, res) => {
@@ -48,4 +51,9 @@ const operatingTimeLongerThan15Minutes = (open, close, res) => {
     return intervalInMinutes(closeDatetime, openDatetime);
 }
 
-export { closeTimeIsGreaterThanOpenTime, operatingTimeLongerThan15Minutes };
+export {
+    closeTimeIsGreaterThanOpenTime,
+    operatingTimeLongerThan15Minutes,
+    intervalInMinutes,
+    finishDateIsGreaterThanStartDate
+};

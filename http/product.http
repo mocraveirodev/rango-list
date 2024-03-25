@@ -1,0 +1,14 @@
+POST http://localhost:3333/products/99d4006c-e9b2-11ee-8f1d-1c39475f4058
+Content-Type: application/json
+
+{
+    "name": "Pastel",
+    "price": 8,
+    "category": "Pastel",
+    "promo": {
+        "description": "Meu pastel é mais balato!!!",
+        "promoPrice": 6.50,
+        "startDatetime": "2024-03-28T12:00:00Z",
+        "finishDatetime": "2024-03-29T20:00:00Z"
+    }
+}
