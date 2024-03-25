@@ -14,8 +14,6 @@ export default class RestaurantAddressRepository {
         const query = `INSERT INTO ${this.restaurantAddressEntity.tableName} (restaurant_id, address_id) VALUES (?, ?)`;
         const result = await queryDatabase(connection, query, [restaurant_id, address_id]);
         await closeConnectionToDatabase(connection);
-        
-        return;
     }
 
     async updateByRestaurantId(restaurant_id, address_id) {
@@ -23,7 +21,5 @@ export default class RestaurantAddressRepository {
         const query = `UPDATE ${this.restaurantAddressEntity.tableName} SET restaurant_id = ?, address_id = ? WHERE restaurant_id = ?`;
         const result = await queryDatabase(connection, query, [restaurant_id, address_id, restaurant_id]);
         await closeConnectionToDatabase(connection);
-        
-        return;
     }
 }

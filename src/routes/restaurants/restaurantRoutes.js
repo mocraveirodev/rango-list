@@ -28,4 +28,8 @@ restaurantsRouter.patch('/:id', celebrate({
     body: patchRestaurantSchema
 }), restaurantController.update);
 
+restaurantsRouter.delete('/:id', celebrate({
+    params: restaurantIdSchema
+}), restaurantController.delete);
+
 export default restaurantsRouter;

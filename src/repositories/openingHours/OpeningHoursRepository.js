@@ -26,8 +26,6 @@ export default class OpeningHoursRepository {
         });
 
         await closeConnectionToDatabase(connection);
-        
-        return;
     }
 
     async updateByRestaurantId(restaurant_id, opening_hours) {
@@ -47,7 +45,5 @@ export default class OpeningHoursRepository {
         });
 
         await closeConnectionToDatabase(connection);
-        
-        return;
     }
 }

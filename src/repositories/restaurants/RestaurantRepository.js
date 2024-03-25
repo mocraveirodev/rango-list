@@ -125,4 +125,11 @@ export default class RestaurantRepository {
         await queryDatabase(connection, query, [name, id]);
         await closeConnectionToDatabase(connection);
     }
+
+    async delete(id) {
+        const connection = await connectToDatabase();
+        const query = `DELETE FROM ${this.restaurantEntity.tableName} WHERE id = ?`;
+        await queryDatabase(connection, query, [id]);
+        await closeConnectionToDatabase(connection);
+    }
 }
