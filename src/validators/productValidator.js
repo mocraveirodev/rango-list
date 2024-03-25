@@ -18,7 +18,13 @@ const createProductSchema = Joi.object({
     promo: promoSchema,
     }).required();
 
+const getAllProductsSchema = Joi.object({
+    page: Joi.number().min(1),
+    perPage: Joi.number().min(1).max(50),
+});
+
 export {
     createProductSchema,
     restaurantIdSchema,
+    getAllProductsSchema
 };

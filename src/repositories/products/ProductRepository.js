@@ -25,4 +25,35 @@ export default class ProductRepository {
 
         return result;
     }
+
+    async findAll({ restaurantId, page = 1, perPage = 10 }) {
+        const connection = await connectToDatabase();
+        let query = `SELECT
+                p.*,
+                JSON_OBJECT(
+                    'category_id', c.id,
+                    'category_name', c.name
+                ) AS category,
+                JSON_OBJECT(
+                    'promotion_id',pr.id,
+                    'promotion_description',pr.description,
+                    'promotion_price',pr.price,
+                    'promotion_start_datetime',pr.start_datetime,
+                    'promotion_finish_datetime',pr.finish_datetime
+                ) AS promo
+            FROM
+                ${this.productEntity.tableName} p
+                INNER JOIN ${this.productEntity.relations.categories.tableName} c ON p.category_id = c.id
+                LEFT JOIN ${this.productEntity.relations.promotions.tableName} pr ON p.id = pr.product_id
+            WHERE
+                p.restaurant_id = ?
+            LIMIT ? OFFSET ?`;
+        const products = await queryDatabase(connection, query, [restaurantId, perPage, (page - 1) * perPage]);
+        query = `SELECT COUNT(*) AS count FROM ${this.productEntity.tableName}`;
+        const [{ count }] = await queryDatabase(connection, query);
+        
+        await closeConnectionToDatabase(connection);
+        
+        return { count, products };
+    }
 }

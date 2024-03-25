@@ -19,7 +19,7 @@ export class UpdateRestaurantService {;
         const restaurantExist = await restaurantRepository.findById(id);
 
         if (!restaurantExist) {
-            throw errorHandler(`Restaurant ${ id } not found. $404`, res);
+            throw errorHandler({ message: `Restaurant ${ id } not found. $404` }, res);
         }
         if (address) {
             const checkedAddress = await checkAndCreateAddressIfNotExists(address);

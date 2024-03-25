@@ -1,3 +1,7 @@
+GET http://localhost:3333/products/99d4006c-e9b2-11ee-8f1d-1c39475f4058
+
+###
+
 POST http://localhost:3333/products/99d4006c-e9b2-11ee-8f1d-1c39475f4058
 Content-Type: application/json
 

@@ -10,7 +10,7 @@ const isValidTime = (time) => {
 
 const convertTimeToDate = (time, res) => {
     if (!isValidTime(time)) {
-        throw errorHandler('Time format is different from "HH:mm". $422', res);
+        throw errorHandler({ message: 'Time format is different from "HH:mm". $422' }, res);
     }
 
     const hourObject = {
