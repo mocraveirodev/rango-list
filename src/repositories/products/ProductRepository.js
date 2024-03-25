@@ -97,4 +97,11 @@ export default class ProductRepository {
         await queryDatabase(connection, query, [category_id, name, price, productId]);
         await closeConnectionToDatabase(connection);
     }
+
+    async delete(restaurantId, productId) {
+        const connection = await connectToDatabase();
+        const query = `DELETE FROM ${this.productEntity.tableName} WHERE id = ? AND restaurant_id = ?`;
+        await queryDatabase(connection, query, [productId, restaurantId]);
+        await closeConnectionToDatabase(connection);
+    }
 }

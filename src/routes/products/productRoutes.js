@@ -31,4 +31,8 @@ productRouter.patch('/:restaurantId/:productId', celebrate({
     body: patchProductSchema
 }), productController.update);
 
+productRouter.delete('/:restaurantId/:productId', celebrate({
+    params: restaurantProductParamsSchema,
+}), productController.delete);
+
 export default productRouter;

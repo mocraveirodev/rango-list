@@ -37,3 +37,7 @@ Content-Type: application/json
         "finishDatetime": "2024-03-30T20:00:00Z"
     }
 }
+
+###
+
+DELETE http://localhost:3333/products/99d4006c-e9b2-11ee-8f1d-1c39475f4058/1f5a7e37-ea78-11ee-8f1d-1c39475f4058
