@@ -29,4 +29,25 @@ export default class OpeningHoursRepository {
         
         return;
     }
+
+    async updateByRestaurantId(restaurant_id, opening_hours) {
+        const connection = await connectToDatabase();
+
+        this.openingHoursEntity.weekDays.map(async day => {
+            const insertArray = [
+                opening_hours?.[day]?.open || null,
+                opening_hours?.[day]?.close || null,
+                restaurant_id,
+                day,
+            ];
+
+            const query = `UPDATE ${this.openingHoursEntity.tableName} SET open_hour = ?, close_hour = ? WHERE restaurant_id = ? AND week_day = ?`;
+
+            await queryDatabase(connection, query, insertArray)
+        });
+
+        await closeConnectionToDatabase(connection);
+        
+        return;
+    }
 }

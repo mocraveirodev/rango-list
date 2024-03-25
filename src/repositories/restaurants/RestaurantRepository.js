@@ -102,7 +102,7 @@ export default class RestaurantRepository {
                 a.city,
                 a.state,
                 a.country`;
-        const result = await queryDatabase(connection, query, id);
+        const [ result ] = await queryDatabase(connection, query, [ id ]);
         await closeConnectionToDatabase(connection);
 
         return result;
@@ -117,5 +117,12 @@ export default class RestaurantRepository {
         await closeConnectionToDatabase(connection);
 
         return result;
+    }
+
+    async update(id, name) {
+        const connection = await connectToDatabase();
+        const query = `UPDATE ${this.restaurantEntity.tableName} SET name = ? WHERE id = ?`;
+        await queryDatabase(connection, query, [name, id]);
+        await closeConnectionToDatabase(connection);
     }
 }

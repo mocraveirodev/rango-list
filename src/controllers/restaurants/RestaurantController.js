@@ -1,6 +1,7 @@
 import { GetAllRestaurantsService } from '../../services/restaurants/GetAllRestaurantsService.js';
 import { GetRestaurantByIdService } from '../../services/restaurants/GetRestaurantByIdService.js';
 import { CreateRestaurantService } from '../../services/restaurants/CreateRestaurantService.js';
+import { UpdateRestaurantService } from '../../services/restaurants/UpdateRestaurantService.js';
 
 export default class RestaurantController {
     async getAll(req, res) {
@@ -33,5 +34,19 @@ export default class RestaurantController {
         }, res);
 
         return res.status(201).json(restaurant);
+    }
+
+    async update(req, res) {
+        const { id } = req.params;
+        const { name, address, opening_hours } = req.body;
+        const updateRestaurantService = new UpdateRestaurantService();
+        const restaurant = await updateRestaurantService.execute({
+            id,
+            name,
+            address,
+            opening_hours,
+        }, res);
+
+        return res.status(200).json(restaurant);
     }
 }

@@ -42,3 +42,46 @@ Content-Type: application/json
         }
     }
 }
+
+###
+
+PATCH http://localhost:3333/restaurants/a624b209-e9b2-11ee-8f1d-1c39475f4058
+Content-Type: application/json
+
+{
+    "name": "Goomer Lista Rango 1",
+    "address": {
+        "postal_code": "01000112",
+        "street": "Rua dos bobosS",
+        "number": "0b",
+        "city": "Rio de Janeiro",
+        "state": "Rio de Janeiro",
+        "country": "Brasil"
+    },
+    "opening_hours": {
+        "monday": {
+            "open": "09:00",
+            "close": "18:00"
+        },
+        "tuesday": {
+            "open": "10:00",
+            "close": "17:00"
+        },
+        "wednesday": {
+            "open": "09:00",
+            "close": "20:00"
+        },
+        "thursday": {
+            "open": "09:00",
+            "close": "16:00"
+        },
+        "friday": {
+            "open": "09:00",
+            "close": "17:00"
+        },
+        "saturday": {
+            "open": "10:00",
+            "close": "14:00"
+        }
+    }
+}

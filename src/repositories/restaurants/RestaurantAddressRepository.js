@@ -15,6 +15,15 @@ export default class RestaurantAddressRepository {
         const result = await queryDatabase(connection, query, [restaurant_id, address_id]);
         await closeConnectionToDatabase(connection);
         
-        return result;
+        return;
+    }
+
+    async updateByRestaurantId(restaurant_id, address_id) {
+        const connection = await connectToDatabase();
+        const query = `UPDATE ${this.restaurantAddressEntity.tableName} SET restaurant_id = ?, address_id = ? WHERE restaurant_id = ?`;
+        const result = await queryDatabase(connection, query, [restaurant_id, address_id, restaurant_id]);
+        await closeConnectionToDatabase(connection);
+        
+        return;
     }
 }
