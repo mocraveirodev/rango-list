@@ -56,6 +56,10 @@ $ yarn start
 Você pode usar a extensão [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) do [VS Code](https://code.visualstudio.com/) para realizar as chamadas à API.
 Na pasta **http** há exemplos de todas as funcionalidades da aplicação.
 
+### 📝Documentação
+
+Com a aplicação rodando, acesse o link [http://localhost:3333/docs/](http://localhost:3333/docs/) para visualizar a documentação.
+
 ### 🎲Modelagem do Banco de Dados
 
 ```mermaid

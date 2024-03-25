@@ -1,0 +1,452 @@
+openapi: 3.0.0
+info:
+    title: Goomer Rango List 🍴
+    description: API RESTful produzida como **Teste Técnico** disponível [nesse link](https://github.com/goomerdev/job-dev-backend-interview)  para a empresa [Goomer](https://www.goomer.com.br/) capaz de gerenciar restaurantes e produtos do seu cardápio.
+    version: 1.0.0
+    contact:
+        name: Monica Craveiro
+        email: craveiromnica@gmail.com
+schemes: [http]
+paths:
+    /restaurants:
+        post:
+            tags:
+                - Restaurants
+            description: Cria um novo restaurante
+            summary: Cria um novo restaurante
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/definitions/RestaurantBody'
+            responses:
+                '200':
+                description: OK
+                content:
+                    application/json:
+                    schema:
+                        type: object
+                        properties:
+                            restaurant:
+                                $ref: '#/definitions/Restaurant'
+                '500':
+                    description: Internal server error.
+        get:
+            tags:
+                - Restaurants
+            description: Retorna uma lista de restaurantes
+            summary: Lista todos os restaurantes
+            parameters:
+                - name: page
+                    in: query
+                    description: Página
+                    default: 1
+                    required: false
+                    schema:
+                        type: number
+                - name: perPage
+                    in: query
+                    description: Registros por página
+                    default: 10
+                    required: false
+                    schema:
+                        type: number
+            responses:
+                '200':
+                description: OK
+                content:
+                    application/json:
+                    schema:
+                        type: object
+                        properties:
+                            pageInfo:
+                                $ref: '#/definitions/PageInfo'
+                            restaurants:
+                                type: array
+                                items:
+                                    $ref: '#/definitions/Restaurant'
+                '500':
+                    description: Internal server error.
+    /restaurants/{id}:
+        get:
+            tags:
+                - Restaurants
+            description: Retorna um restaurante
+            summary: Retorna um restaurante
+            parameters:
+                - name: id
+                    in: path
+                    description: ID do restaurante
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                '200':
+                description: OK
+                content:
+                    application/json:
+                    schema:
+                        type: object
+                        properties:
+                            restaurant:
+                                $ref: '#/definitions/Restaurant'
+                '404':
+                    description: Restaurant not found
+                '500':
+                    description: Internal server error.
+        put:
+            tags:
+                - Restaurants
+            description: Atualiza um restaurante
+            summary: Atualiza um restaurante
+            parameters:
+                - name: id
+                    in: path
+                    description: ID do restaurante
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/definitions/RestaurantBody'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    restaurant:
+                                        $ref: '#/definitions/Restaurant'
+                '404':
+                    description: Restaurant not found
+                '500':
+                    description: Internal server error.
+        delete:
+            tags:
+                - Restaurants
+            description: Deleta um restaurante
+            summary: Deleta um restaurante
+            parameters:
+                - name: id
+                    in: path
+                    description: ID do restaurante
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                '204':
+                    description: No Content
+                '500':
+                    description: Internal server error.
+    /products/{restaurantId}:
+        post:
+            tags:
+                - Products
+            description: Cria um novo produto
+            summary: Cria um novo produto
+            parameters:
+                - name: restaurantId
+                    in: path
+                    description: ID do restaurante
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/definitions/ProductBody'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    product:
+                                        $ref: '#/definitions/Product'
+                '404':
+                    description: Restaurant not found
+                '500':
+                    description: Internal server error.
+        get:
+            tags:
+                - Products
+            description: Retorna uma lista de produtos
+            summary: Lista todos os produtos
+            parameters:
+                - name: restaurantId
+                    in: path
+                    description: ID do restaurante
+                    required: true
+                    schema:
+                        type: string
+            resposes:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    pageInfo:
+                                        $ref: '#/definitions/PageInfo'
+                                    products:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/Product'
+                '500':
+                    description: Internal server error.
+    /products/{restaurantId}/{productId}:
+        get:
+            tags:
+                - Products
+            description: Retorna um produto
+            summary: Retorna um produto
+            parameters:
+                - name: restaurantId
+                    in: path
+                    description: ID do restaurante
+                    required: true
+                    schema:
+                        type: string
+                - name: productId
+                    in: path
+                    description: ID do produto
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    product:
+                                        $ref: '#/definitions/Product'
+                '404':
+                    description: Product not found
+                '500':
+                    description: Internal server error.
+        put:
+            tags:
+                - Products
+            description: Atualiza um produto
+            summary: Atualiza um produto
+            parameters:
+                - name: restaurantId
+                    in: path
+                    description: ID do restaurante
+                    required: true
+                    schema:
+                        type: string
+                - name: productId
+                    in: path
+                    description: ID do produto
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/definitions/ProductBody'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    product:
+                                        $ref: '#/definitions/Product'
+                '404':
+                    description: Product not found
+                '500':
+                    description: Internal server error.
+        delete:
+            tags:
+                - Products
+            description: Deleta um produto
+            summary: Deleta um produtos
+            parameters:
+                - name: restaurantId
+                    in: path
+                    description: ID do restaurante
+                    required: true
+                    schema:
+                        type: string
+                - name: productId
+                    in: path
+                    description: ID do produto
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                '204':
+                    description: No Content
+                '500':
+                    description: Internal server error.
+    
+definitions:
+    Restaurant:
+        type: object
+        properties:
+            id:
+                type: string
+                example: 63ca65d5-ea94-11ee-8f1d-1c39475f4058
+            name:
+                type: string
+                example: Goomer Lista Rango
+            image:
+                type: string
+                example: null
+            imageUrl:
+                type: string
+                example: null
+            createdAt:
+                type: date
+                example: 2021-07-19T02:55:08.573Z
+            updatedAt:
+                type: date
+                example: 2021-07-19T02:55:08.573Z
+            address:
+                type: object
+                example:
+                    postalCode: 00000000
+                    street: Av. Paulista, 1000, São Paulo - SP
+                    number: 0
+                    complement: null
+                    city: São Paulo
+                    state: SP
+                    country: Brazil
+                    createdAt: 2021-07-19T02:55:08.573Z
+                    updatedAt: 2021-07-19T02:55:08.573Z
+            opening_hours:
+                type: object
+                example:
+                    sunday:
+                        startHour: null
+                        finishHour: null
+                    monday:
+                        startHour: "09:00"
+                        finishHour: "17:00"
+                    tuesday:
+                        startHour: "09:00"
+                        finishHour: "17:00"
+                    wednesday:
+                        startHour: "08:00"
+                        finishHour: "12:00"
+                    thursday:
+                        startHour: "09:00"
+                        finishHour: "17:00"
+                    friday:
+                        startHour: "09:00"
+                        finishHour: "17:00"
+                    saturday:
+                        startHour: null
+                        finishHour: null
+    RestaurantBody:
+        type: object
+        properties:
+            name:
+                type: string
+                example: Goomer Lista Rango
+            image:
+                type: string
+                example: null
+            imageUrl:
+                type: string
+                example: null
+            address:
+                type: object
+                example:
+                    postalCode: 00000000
+                    street: Av. Paulista, 1000, São Paulo - SP
+                    number: 0
+                    complement: null
+                    city: São Paulo
+                    state: SP
+                    country: Brazil
+                    createdAt: 2021-07-19T02:55:08.573Z
+                    updatedAt: 2021-07-19T02:55:08.573Z
+            opening_hours:
+                type: object
+                example:
+                    sunday:
+                        startHour: null
+                        finishHour: null
+                    monday:
+                        startHour: "09:00"
+                        finishHour: "17:00"
+                    tuesday:
+                        startHour: "09:00"
+                        finishHour: "17:00"
+                    wednesday:
+                        startHour: "08:00"
+                        finishHour: "12:00"
+                    thursday:
+                        startHour: "09:00"
+                        finishHour: "17:00"
+                    friday:
+                        startHour: "09:00"
+                        finishHour: "17:00"
+                    saturday:
+                        startHour: null
+                        finishHour: null
+    products:
+        type: array
+        example:
+            - id: 6bcfe1b5-fd4d-4c92-b423-b96be9b66b28
+              name: Goomer Restaurant 1
+              image: null
+              imageUrl: null
+              createdAt: 2021-07-19T02:55:08.573Z
+              updatedAt: 2021-07-19T02:55:08.573Z
+              category:
+                  id: 6bcfe1b5-fd4d-4c92-b423-b96be9b66b28
+                  name: Goomer
+              promo:
+                  id: 6bcfe1b5-fd4d-4c92-b423-b96be9b66b28
+                  name: Goomer Promo
+                  price: 10.00
+                  startDate: 2021-07-19T02:55:08.573Z
+                  endDate: 2021-07-19T02:55:08.573Z
+    ProductBody:
+        type: object
+        example:
+            name: Goomer Restaurant 1
+            price: 10.00
+            category: Goominho
+            promo:
+                description: Goomer Promo
+                price: 10.00
+                startDate: 2021-07-19T02:55:08.573Z
+                endDate: 2021-07-19T02:55:08.573Z
+    PageInfo:
+        type: object
+        properties:
+            total:
+                type: number
+                example: 1
+            perPage:
+                type: number
+                example: 10
+            currentPage:
+                type: number
+                example: 1
+            lastPage:
+                type: number
+                example: 1
+            hasNextPage:
+                type: boolean
+                example: false
