@@ -61,7 +61,6 @@ Na pasta **http** há exemplos de todas as funcionalidades da aplicação.
 ```mermaid
 classDiagram
     class Restaurants {
-        << (PK) >>
         id: VARCHAR(36)
         name: VARCHAR(255)
         image: VARCHAR(255)
@@ -69,7 +68,6 @@ classDiagram
         updated_at: TIMESTAMP
     }
     class Addresses {
-        << (PK) >>
         id: VARCHAR(36)
         postal_code: VARCHAR(255)
         street: VARCHAR(255)
@@ -83,7 +81,6 @@ classDiagram
         updated_at: TIMESTAMP
     }
     class RestaurantAddresses {
-        << (PK) >>
         restaurant_id: VARCHAR(36)
         address_id: VARCHAR(36)
         created_at: TIMESTAMP
@@ -93,7 +90,6 @@ classDiagram
         Addresses
     }
     class OpeningHours {
-        << (PK) >>
         restaurant_id: VARCHAR(36)
         week_day: ENUM('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday')
         open_hour: TIME
@@ -104,7 +100,6 @@ classDiagram
         Restaurants
     }
     class Categories {
-        << (PK) >>
         id: VARCHAR(36)
         restaurant_id: VARCHAR(36)
         name: VARCHAR(255)
@@ -114,7 +109,6 @@ classDiagram
         Restaurants
     }
     class Products {
-        << (PK) >>
         id: VARCHAR(36)
         restaurant_id: VARCHAR(36)
         category_id: VARCHAR(36)
@@ -128,7 +122,6 @@ classDiagram
         Categories
     }
     class Promotions {
-        << (PK) >>
         id: VARCHAR(36)
         product_id: VARCHAR(36)
         description: TEXT
