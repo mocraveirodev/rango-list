@@ -4,7 +4,7 @@ import { formatProducts } from '../../utils/formatProducts.js';
 import { getPageInfo } from '../../utils/getPageInfo.js';
 import errorHandler from '../../utils/errorHandler.js';
 
-export default class GetProductByIdService {;    
+export default class GetProductByIdService {   
     async execute({ restaurantId, productId }, res) {
         const restaurantRepository = new RestaurantRepository();
         const restaurantExists = await restaurantRepository.findById(restaurantId);

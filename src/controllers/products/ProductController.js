@@ -1,5 +1,6 @@
 import GetAllProductsByRestaurantService from '../../services/products/GetAllProductsByRestaurantService.js';
 import GetProductByIdService from '../../services/products/GetProductByIdService.js';
+import UpdateProductService from '../../services/products/UpdateProductService.js';
 
 export default class ProductController {
     async create(req, res) {
@@ -34,6 +35,14 @@ export default class ProductController {
         const { restaurantId, productId } = req.params;
         const getProductByIdService = new GetProductByIdService();
         const product = await getProductByIdService.execute({ restaurantId, productId }, res);
+        return res.status(200).json(product);
+    }
+
+    async update(req, res) {
+        const { restaurantId, productId } = req.params;
+        const { name, price, category, promo } = req.body;
+        const updateProductService = new UpdateProductService();
+        const product = await updateProductService.execute({ restaurantId, productId, name, price, category, promo }, res);
         return res.status(200).json(product);
     }
 }

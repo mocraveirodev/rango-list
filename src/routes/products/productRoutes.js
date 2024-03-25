@@ -4,7 +4,8 @@ import {
     createProductSchema,
     restaurantIdSchema,
     getAllProductsSchema,
-    getProductByIdSchema
+    restaurantProductParamsSchema,
+    patchProductSchema
 } from '../../validators/productValidator.js';
 import ProductController from '../../controllers/products/ProductController.js';
 
@@ -17,12 +18,17 @@ productRouter.get('/:restaurantId', celebrate({
 }), productController.getAll);
 
 productRouter.get('/:restaurantId/:productId', celebrate({
-    params: getProductByIdSchema,
+    params: restaurantProductParamsSchema,
 }), productController.getById);
 
-productRouter.post('/:restaurantId', celebrate({
+productRouter.post('/:restaurantId/:productId', celebrate({
     params: restaurantIdSchema,
     body: createProductSchema
 }), productController.create);
+
+productRouter.patch('/:restaurantId/:productId', celebrate({
+    params: restaurantProductParamsSchema,
+    body: patchProductSchema
+}), productController.update);
 
 export default productRouter;

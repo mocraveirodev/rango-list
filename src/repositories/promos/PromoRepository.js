@@ -30,4 +30,30 @@ export default class PromoRepository {
         ]);
         await closeConnectionToDatabase(connection);
     }
+
+    async updateByProductId({
+        productId,
+        description,
+        promoPrice,
+        startDatetime,
+        finishDatetime,
+    }) {
+        const connection = await connectToDatabase();
+        const query = `UPDATE ${this.promoEntity.tableName}
+            SET
+                description = IFNULL(?, description),
+                price = IFNULL(?, price),
+                start_datetime = IFNULL(?, start_datetime),
+                finish_datetime = IFNULL(?, finish_datetime)
+            WHERE
+                product_id = ?`;
+        await queryDatabase(connection, query, [
+            description,
+            promoPrice,
+            startDatetime,
+            finishDatetime,
+            productId
+        ]);
+        await closeConnectionToDatabase(connection);
+    }
 }

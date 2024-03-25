@@ -32,6 +32,6 @@ export default class CategoriesRepository {
             return null;
         }
     
-        return { id: category.id };
+        return { id: result.id };
     }
 }

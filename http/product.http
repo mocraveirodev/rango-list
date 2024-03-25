@@ -20,3 +20,20 @@ Content-Type: application/json
         "finishDatetime": "2024-03-29T20:00:00Z"
     }
 }
+
+###
+
+PATCH http://localhost:3333/products/99d4006c-e9b2-11ee-8f1d-1c39475f4058/1f5a7e37-ea78-11ee-8f1d-1c39475f4058
+Content-Type: application/json
+
+{
+    "name": "PastelZAUM",
+    "price": 12,
+    "category": "Pastel Grande",
+    "promo": {
+        "description": "Meu pastel é mais gostoso!!!",
+        "promoPrice": 10,
+        "startDatetime": "2024-03-27T12:00:00Z",
+        "finishDatetime": "2024-03-30T20:00:00Z"
+    }
+}

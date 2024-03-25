@@ -84,4 +84,17 @@ export default class ProductRepository {
         
         return product;
     }
+
+    async update({ productId, name, price, category_id }) {
+        const connection = await connectToDatabase();
+        const query = `UPDATE ${this.productEntity.tableName}
+            SET
+                category_id = IFNULL(?, category_id),
+                name = IFNULL(?, name),
+                price = IFNULL(?, price)
+            WHERE
+                id = ?`;
+        await queryDatabase(connection, query, [category_id, name, price, productId]);
+        await closeConnectionToDatabase(connection);
+    }
 }
