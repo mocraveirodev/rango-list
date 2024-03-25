@@ -1,4 +1,5 @@
 import GetAllProductsByRestaurantService from '../../services/products/GetAllProductsByRestaurantService.js';
+import GetProductByIdService from '../../services/products/GetProductByIdService.js';
 
 export default class ProductController {
     async create(req, res) {
@@ -27,5 +28,12 @@ export default class ProductController {
             perPage
         }, res);
         return res.status(200).json({ pageInfo, products });
+    }
+
+    async getById(req, res) {
+        const { restaurantId, productId } = req.params;
+        const getProductByIdService = new GetProductByIdService();
+        const product = await getProductByIdService.execute({ restaurantId, productId }, res);
+        return res.status(200).json(product);
     }
 }

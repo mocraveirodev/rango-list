@@ -23,8 +23,14 @@ const getAllProductsSchema = Joi.object({
     perPage: Joi.number().min(1).max(50),
 });
 
+const getProductByIdSchema = Joi.object({
+    restaurantId: Joi.string().guid({ version: 'uuidv1' }).required(),
+    productId: Joi.string().guid({ version: 'uuidv1' }).required(),
+});
+
 export {
     createProductSchema,
     restaurantIdSchema,
-    getAllProductsSchema
+    getAllProductsSchema,
+    getProductByIdSchema
 };

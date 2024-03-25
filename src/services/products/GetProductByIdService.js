@@ -4,12 +4,8 @@ import { formatProducts } from '../../utils/formatProducts.js';
 import { getPageInfo } from '../../utils/getPageInfo.js';
 import errorHandler from '../../utils/errorHandler.js';
 
-export default class GetAllProductsByRestaurantService {;    
-    async execute({
-        restaurantId,
-        page = 1,
-        perPage = 10,
-    }, res) {
+export default class GetProductByIdService {;    
+    async execute({ restaurantId, productId }, res) {
         const restaurantRepository = new RestaurantRepository();
         const restaurantExists = await restaurantRepository.findById(restaurantId);
         
@@ -18,15 +14,10 @@ export default class GetAllProductsByRestaurantService {;
         }
         
         const productRepository = new ProductRepository();
-        const { count, products } = await productRepository.findAll({
-            restaurantId,
-            page,
-            perPage,
-        });
+        const product = await productRepository.findById({ restaurantId, productId });
 
-        const formattedProducts = formatProducts(products);
-        const pageInfo = getPageInfo(page, perPage, count);
+        const [ formattedProduct ] = formatProducts(product);
 
-        return { pageInfo, products: formattedProducts };
+        return formattedProduct;
     }
 }

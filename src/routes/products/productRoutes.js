@@ -3,7 +3,8 @@ import { celebrate } from 'celebrate';
 import { 
     createProductSchema,
     restaurantIdSchema,
-    getAllProductsSchema
+    getAllProductsSchema,
+    getProductByIdSchema
 } from '../../validators/productValidator.js';
 import ProductController from '../../controllers/products/ProductController.js';
 
@@ -14,6 +15,10 @@ productRouter.get('/:restaurantId', celebrate({
     params: restaurantIdSchema,
     query: getAllProductsSchema
 }), productController.getAll);
+
+productRouter.get('/:restaurantId/:productId', celebrate({
+    params: getProductByIdSchema,
+}), productController.getById);
 
 productRouter.post('/:restaurantId', celebrate({
     params: restaurantIdSchema,
